@@ -44,11 +44,12 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
             next: { revalidate: 60 },
         });
 
+        if (request.status === 404) {
+            return notFound();
+        }
+
         if (!request.ok) {
-            if (request.status === 404) {
-                return notFound();
-            }
-            throw new Error(`Failed to fetch event: ${request.statusText}`);
+            throw new Error(`Failed to fetch event: ${request.status} ${request.statusText}`);
         }
 
         const response = await request.json();
@@ -59,7 +60,8 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
         }
     } catch (error) {
         console.error("Error fetching event:", error);
-        return notFound();
+        throw error;
+    }
     }
 
     const { description, image, overview, date, time, location, mode, agenda, audience, tags, organizer } = event;
@@ -68,7 +70,13 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
 
     const bookings = 10;
 
-    const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
+    let similarEvents: IEvent[] = [];
+
+    try {
+        similarEvents = await getSimilarEventsBySlug(slug);
+    } catch (error) {
+        console.error("Error fetching similar events:", error);
+    }
 
     return (
         <section id="event">
@@ -129,8 +137,8 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
                 <div className="flex w-full flex-col gap-4 pt-20">
                     <h2>Similar Events</h2>
                     <div className="events">
-                        {similarEvents.map((similarEvent: IEvent) => (
-                            <EventCard {...similarEvent} key={similarEvent.title} />
+                        {similarEvent.map((similarEvent: IEvent) => (
+                            <EventCard {...similarEvent} key={similarEvent.slug} />
                         ))}
                     </div>
                 </div>

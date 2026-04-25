@@ -44,9 +44,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
             next: { revalidate: 60 },
         });
 
-        if (request.status === 404) {
-            return notFound();
-        }
+        if (request.status === 404) return notFound();
 
         if (!request.ok) {
             throw new Error(`Failed to fetch event: ${request.status} ${request.statusText}`);
@@ -55,16 +53,13 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
         const response = await request.json();
         event = response.event;
 
-        if (!event) {
-            return notFound();
-        }
+        if (!event) return notFound();
     } catch (error) {
         console.error("Error fetching event:", error);
         throw error;
     }
-    }
 
-    const { description, image, overview, date, time, location, mode, agenda, audience, tags, organizer } = event;
+    const { title, description, image, overview, date, time, location, mode, agenda, audience, tags, organizer } = event;
 
     if (!description) return notFound();
 
@@ -81,7 +76,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
     return (
         <section id="event">
             <div className="header">
-                <h1>Event Description</h1>
+                <h1>{title}</h1>
                 <p>{description}</p>
             </div>
 
@@ -137,7 +132,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
                 <div className="flex w-full flex-col gap-4 pt-20">
                     <h2>Similar Events</h2>
                     <div className="events">
-                        {similarEvent.map((similarEvent: IEvent) => (
+                        {similarEvents.map((similarEvent: IEvent) => (
                             <EventCard {...similarEvent} key={similarEvent.slug} />
                         ))}
                     </div>

@@ -21,11 +21,12 @@ Google’s premier cloud computing event, showcasing innovations in AI, infrastr
 --WebAppBoundary
 Content-Disposition: form-data; name="overview"
 
-Cloud Next 2025 highlights the latest in cloud-native development, Kubernetes, AI, and enterprise scalability. Developers, architects, and executives gather to learn about new Google Cloud services, best practices, and success stories.
+Cloud Next 2026 highlights the latest in cloud-native development, Kubernetes, AI, and enterprise scalability.
+Developers, architects, and executives gather to learn about new Google Cloud services, best practices, and success stories.
 --WebAppBoundary
 Content-Disposition: form-data; name="image"; filename="event1.webp"
 
-< ~/Downloads/event1.webp
+< /Users/michaelcherrera/Development/Practice/NextJS/nextjs-crash-course/public/images/event1.png
 --WebAppBoundary
 Content-Disposition: form-data; name="venue"
 
@@ -37,7 +38,7 @@ San Francisco, CA
 --WebAppBoundary
 Content-Disposition: form-data; name="date"
 
-2025-04-10
+2026-04-10
 --WebAppBoundary
 Content-Disposition: form-data; name="time"
 
@@ -76,3 +77,143 @@ Content-Disposition: form-data; name="tags"
 ]
 --WebAppBoundary--
 
+### Create 2nd event
+POST http://localhost:3000/api/events
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="title"
+
+AWS re:Invent 2026
+--WebAppBoundary
+Content-Disposition: form-data; name="description"
+
+Amazon Web Services' flagship conference focused on cloud computing, DevOps, and scalable infrastructure.
+--WebAppBoundary
+Content-Disposition: form-data; name="overview"
+
+AWS re:Invent 2026 brings together developers, engineers, and business leaders to explore the latest in cloud infrastructure, serverless computing, AI, and DevOps practices.
+Attendees gain hands-on experience with AWS tools and learn how to build scalable, resilient systems.
+--WebAppBoundary
+Content-Disposition: form-data; name="image"; filename="event2.webp"
+
+< /Users/michaelcherrera/Development/Practice/NextJS/nextjs-crash-course/public/images/event2.png
+--WebAppBoundary
+Content-Disposition: form-data; name="venue"
+
+The Venetian Convention Center
+--WebAppBoundary
+Content-Disposition: form-data; name="location"
+
+Las Vegas, NV
+--WebAppBoundary
+Content-Disposition: form-data; name="date"
+
+2026-11-30
+--WebAppBoundary
+Content-Disposition: form-data; name="time"
+
+09:00
+--WebAppBoundary
+Content-Disposition: form-data; name="mode"
+
+offline
+--WebAppBoundary
+Content-Disposition: form-data; name="audience"
+
+Cloud engineers, DevOps teams, software architects
+--WebAppBoundary
+Content-Disposition: form-data; name="agenda"
+
+[
+  "09:00 AM - 10:30 AM | Keynote: The Future of Cloud",
+  "10:45 AM - 12:00 PM | Breakout Sessions: Serverless & AI",
+  "12:00 PM - 01:00 PM | Lunch",
+  "01:00 PM - 02:30 PM | Hands-on Labs",
+  "02:45 PM - 04:00 PM | Networking & Expo"
+]
+--WebAppBoundary
+Content-Disposition: form-data; name="organizer"
+
+Amazon Web Services hosts re:Invent to showcase innovations in cloud computing and bring together the global cloud community.
+--WebAppBoundary
+Content-Disposition: form-data; name="tags"
+
+[
+  "Cloud",
+  "DevOps",
+  "AI",
+  "Serverless"
+]
+--WebAppBoundary--
+
+### Create 3rd event
+POST http://localhost:3000/api/events
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="title"
+
+KubeCon + CloudNativeCon 2026
+--WebAppBoundary
+Content-Disposition: form-data; name="description"
+
+The leading conference for Kubernetes and cloud-native technologies.
+--WebAppBoundary
+Content-Disposition: form-data; name="overview"
+
+KubeCon + CloudNativeCon 2026 gathers the cloud-native community to discuss Kubernetes, microservices, and modern DevOps practices.
+Engineers and open-source contributors collaborate on scaling distributed systems and advancing cloud-native ecosystems.
+--WebAppBoundary
+Content-Disposition: form-data; name="image"; filename="event3.webp"
+
+< /Users/michaelcherrera/Development/Practice/NextJS/nextjs-crash-course/public/images/event3.png
+--WebAppBoundary
+Content-Disposition: form-data; name="venue"
+
+McCormick Place
+--WebAppBoundary
+Content-Disposition: form-data; name="location"
+
+Chicago, IL
+--WebAppBoundary
+Content-Disposition: form-data; name="date"
+
+2026-06-15
+--WebAppBoundary
+Content-Disposition: form-data; name="time"
+
+08:00
+--WebAppBoundary
+Content-Disposition: form-data; name="mode"
+
+hybrid
+--WebAppBoundary
+Content-Disposition: form-data; name="audience"
+
+Developers, DevOps engineers, cloud architects
+--WebAppBoundary
+Content-Disposition: form-data; name="agenda"
+
+[
+  "08:00 AM - 09:00 AM | Opening Keynote",
+  "09:15 AM - 10:30 AM | Kubernetes Deep Dive",
+  "10:45 AM - 12:00 PM | Microservices Architecture",
+  "12:00 PM - 01:00 PM | Lunch",
+  "01:00 PM - 03:00 PM | Workshops & Labs",
+  "03:15 PM - 04:30 PM | Community Talks"
+]
+--WebAppBoundary
+Content-Disposition: form-data; name="organizer"
+
+The Cloud Native Computing Foundation hosts KubeCon to support and grow the Kubernetes and cloud-native ecosystem.
+--WebAppBoundary
+Content-Disposition: form-data; name="tags"
+
+[
+  "Cloud",
+  "Kubernetes",
+  "DevOps",
+  "Microservices"
+]
+--WebAppBoundary--

@@ -48,13 +48,13 @@ export default function RootLayout({
                         raysColor="#5dfeca"
                         raysSpeed={0.5}
                         lightSpread={0.9}
-                        rayLength={1.4}
+                        rayLength={0.75}
                         followMouse={true}
                         mouseInfluence={0.02}
                         noiseAmount={0}
                         distortion={0.01}
                         pulsating={false}
-                        fadeDistance={0.01}
+                        fadeDistance={0.1}
                         saturation={1}
                     />
                 </div>

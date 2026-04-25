@@ -22,6 +22,14 @@ export const metadata: Metadata = {
     description: "The Hub for Every Dev Event You Don't Want to Miss",
 };
 
+/**
+ * Defines the application's root HTML layout, applying global fonts and page chrome.
+ *
+ * Renders the document <html> and <body> structure with global font variables and layout utilities, includes the site navigation, an animated background (LightRays) configured for top-centered origin and subtle visual effects, and a <main> container that hosts the page content.
+ *
+ * @param children - The page content to render inside the root layout's main area
+ * @returns A JSX element representing the application's root HTML layout
+ */
 export default function RootLayout({
     children,
 }: Readonly<{

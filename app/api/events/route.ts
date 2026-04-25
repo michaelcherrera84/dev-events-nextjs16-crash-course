@@ -5,15 +5,15 @@ import connectDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
 
 /**
- * Create a new event from multipart form data and upload its image to Cloudinary.
+ * Create an event from multipart form data and upload its image to Cloudinary.
  *
- * Expects the request to include form fields for the event and an `image` file. Uploads the image, sets `image` to the Cloudinary `secure_url`, persists the event to the database, and returns a JSON response.
+ * Expects multipart form fields describing the event and an `image` file. Parses `tags` and `agenda` from their form fields, uploads the image to Cloudinary, sets the event's `image` to the returned `secure_url`, persists the event to the database, and returns a JSON response indicating outcome.
  *
  * @param req - NextRequest containing multipart `formData()` with event fields and an `image` file
- * @returns A NextResponse with JSON:
- *   - On success: status 201 and `{ message: "Event created successfully", event }`
- *   - On client error: status 400 and `{ message: string }` (e.g., missing/invalid data or missing image)
- *   - On server error: status 500 and `{ message: "Event Creation Failed", error: string }`
+ * @returns A JSON NextResponse:
+ *   - `201` with `{ message: "Event created successfully", event }` on success
+ *   - `400` with `{ message: string }` for client errors (e.g., invalid form data or missing image)
+ *   - `500` with `{ message: "Event Creation Failed", error: string }` for server errors
  */
 export async function POST(req: NextRequest) {
     try {
@@ -35,6 +35,22 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Image file is required" }, { status: 400 });
         }
 
+        const rawTags = formData.get("tags");
+        const rawAgenda = formData.get("agenda");
+        let tags: string[];
+        let agenda: string[];
+
+        try {
+            tags = JSON.parse(String(rawTags));
+            agenda = JSON.parse(String(rawAgenda));
+        } catch {
+            return NextResponse.json({ message: "Invalid `tags` or `agenda` JSON" }, { status: 400 });
+        }
+
+        if (!Array.isArray(tags) || !Array.isArray(agenda)) {
+            return NextResponse.json({ message: "`tags` and `agenda` must be JSON arrays" }, { status: 400 });
+        }
+
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
@@ -49,7 +65,11 @@ export async function POST(req: NextRequest) {
 
         event.image = (uploadResult as { secure_url: string }).secure_url;
 
-        const createdEvent = await Event.create(event);
+        const createdEvent = await Event.create({
+            ...event,
+            tags: tags,
+            agenda: agenda,
+        });
 
         return NextResponse.json({ message: "Event created successfully", event: createdEvent }, { status: 201 });
     } catch (e) {
